@@ -1,0 +1,13 @@
+
+logs/
+venv/
+
+dbtlearn/target/
+dbtlearn/dbt_packages/
+dbtlearn/logs/
+
+package-lock.yml
+
+**/__pycache__/
+*.pyc
+tmp*/

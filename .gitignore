@@ -11,5 +11,6 @@ package-lock.yml
 **/__pycache__/
 *.pyc
 tmp*/
+*.toml
 
 settings.json

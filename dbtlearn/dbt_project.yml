@@ -33,6 +33,9 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   dbtlearn:
+    +persist_docs:
+      relation: true
+      columns: true
     # Config indicated by + and applies to all files under models/example/
     src:
       +materialized: ephemeral
@@ -40,3 +43,5 @@ models:
       +materialized: table
     fct:
       +tags: "fact"
+      +database: "AWIR_{{ env_var('DBT_ENTORNO') }}_TEST"
+      +schema: "SCH_TEST"

@@ -1,0 +1,65 @@
+//--configured at schema: airbnb.dev
+Table "model.dbtlearn.dim_hosts_cleansed" {
+  "host_id" "number" [note: "The id of the host. This is the primary key."]
+  "host_name" "text" [note: "The name of the host"]
+  "is_superhost" "text" [note: "Defines whether the hosts is a superhost."]
+  "created_at" "timestamp_ntz"
+  "updated_at" "timestamp_ntz"
+
+  Note: "Cleansed table for the Airbnb hosts"
+}
+//--configured at schema: airbnb.dev
+Table "model.dbtlearn.dim_listings_cleansed" {
+  "listing_id" "number" [note: "Primary key for the listing"]
+  "listing_name" "text"
+  "room_type" "text" [note: "Type of the apartment / room"]
+  "minimum_nights" "number" [note: "Minimum number of nights required to rent this property. \r\n\r\nKeep in mind that old listings might have `minimum_nights` set \r\nto 0 in the source tables. Our cleansing algorithm updates this to `1`."]
+  "host_id" "number" [note: "The hosts's id. References the host table."]
+  "price" "number"
+  "created_at" "timestamp_ntz"
+  "updated_at" "timestamp_ntz"
+
+  Note: "Cleansed table which contains Airbnb listings."
+}
+//--configured at schema: airbnb.dev
+Table "model.dbtlearn.dim_listings_w_hosts" {
+  "listing_id" "number"
+  "listing_name" "text"
+  "room_type" "text"
+  "minimum_nights" "number"
+  "price" "number"
+  "host_id" "number"
+  "host_name" "text"
+  "host_is_superhost" "text"
+  "created_at" "timestamp_ntz"
+  "updated_at" "timestamp_ntz"
+
+  Note: ""
+}
+//--configured at schema: awir_d_test.dev_sch_test
+Table "model.dbtlearn.fct_reviews" {
+  "review_id" "text"
+  "listing_id" "number"
+  "review_date" "timestamp_ntz"
+  "reviewer_name" "text"
+  "review_text" "text"
+  "review_sentiment" "text"
+
+  Note: ""
+}
+//--configured at schema: airbnb.dev
+Table "model.dbtlearn.mart_fullmoon_reviews" {
+  "review_id" "text"
+  "listing_id" "number"
+  "review_date" "timestamp_ntz"
+  "reviewer_name" "text"
+  "review_text" "text"
+  "review_sentiment" "text"
+  "is_full_moon" "text"
+
+  Note: ""
+}
+
+//Refs (based on the DBT Relationship Tests)
+Ref: "model.dbtlearn.dim_listings_cleansed"."host_id" > "model.dbtlearn.dim_hosts_cleansed"."host_id"
+Ref: "model.dbtlearn.fct_reviews"."listing_id" > "model.dbtlearn.dim_listings_cleansed"."listing_id"

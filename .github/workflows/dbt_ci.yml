@@ -6,12 +6,6 @@ on:
   pull_request:
     branches: [feature/staging]
 
-# Set needed env variables
-# env:
-#   DBT_PROFILE_TARGET: dev
-#   DBT_PROFILE_USER: ${{ secrets.DBT_PROFILE_USER }}
-#   DBT_PROFILE_PASSWORD: ${{ secrets.DBT_PROFILE_PASSWORD }}
-
 jobs:
   build:
     runs-on: ubuntu-latest

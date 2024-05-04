@@ -7,10 +7,10 @@ on:
     branches: [feature/staging]
 
 # Set needed env variables
-env:
-  DBT_PROFILE_TARGET: dev
-  DBT_PROFILE_USER: ${{ secrets.DBT_PROFILE_USER }}
-  DBT_PROFILE_PASSWORD: ${{ secrets.DBT_PROFILE_PASSWORD }}
+# env:
+#   DBT_PROFILE_TARGET: dev
+#   DBT_PROFILE_USER: ${{ secrets.DBT_PROFILE_USER }}
+#   DBT_PROFILE_PASSWORD: ${{ secrets.DBT_PROFILE_PASSWORD }}
 
 jobs:
   build:
@@ -30,8 +30,21 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      - name: Create dbt profile
+        env:
+          PROFILES_YML: ${{ secrets.PROFILES_YML }}
+        run: |
+          mkdir -p ~/.dbt
+          echo "$PROFILES_YML" > ~/.dbt/profiles.yml
+
+      - name: Execute dbt debug
+        run: |
+          dbt debug
+        working-directory: ./dbtlearn
+
       - name: Install dbt packages
         run: dbt deps
+        working-directory: ./dbtlearn
 
       - name: Run dbt test
         run: dbt test

@@ -1,9 +1,9 @@
 name: Tutorial Github Actions
 
-on: workflow_dispatch
+on: push
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
 

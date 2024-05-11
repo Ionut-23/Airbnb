@@ -1,14 +1,17 @@
 name: Continuous Integration
 
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [feature/staging]
+# on:
+#   push:
+#     branches: [main]
+#   pull_request:
+#     branches: [feature/staging]
+
+on: workflow_dispatch
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout
@@ -42,3 +45,4 @@ jobs:
 
       - name: Run dbt test
         run: dbt test
+        working-directory: ./dbtlearn

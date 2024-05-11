@@ -1,0 +1,41 @@
+name: Test dbt
+
+on: workflow_dispatch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install dbt-snowflake
+
+      - name: Create dbt profile
+        env:
+          PROFILES_YML: ${{ secrets.PROFILES_YML }}
+        run: |
+          mkdir -p ~/.dbt
+          echo "$PROFILES_YML" > ~/.dbt/profiles.yml
+
+      - name: Execute dbt debug
+        run: |
+          dbt debug
+        working-directory: ./dbtlearn
+
+      - name: Install dbt packages
+        run: dbt deps
+        working-directory: ./dbtlearn
+
+      - name: Run dbt test
+        run: dbt test
+        working-directory: ./dbtlearn

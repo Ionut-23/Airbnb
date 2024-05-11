@@ -1,6 +1,6 @@
 name: Tutorial Github Actions
 
-on: push
+on: workflow_dispatch
 
 jobs:
   test:

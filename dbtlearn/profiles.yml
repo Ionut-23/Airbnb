@@ -1,0 +1,13 @@
+dbtlearn:
+  target: "{{ env_var('DBT_PROFILE_TARGET') }}"
+  outputs:
+    dev:
+      account: "{{ env_var('DBT_PROFILE_ACCOUNT') }}"
+      database: AIRBNB
+      password: "{{ env_var('DBT_PROFILE_PASSWORD') }}"
+      role: accountadmin
+      schema: DEV
+      threads: 4
+      type: snowflake
+      user: "{{ env_var('DBT_PROFILE_USER') }}"
+      warehouse: COMPUTE_WH

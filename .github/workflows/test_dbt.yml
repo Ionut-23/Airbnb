@@ -1,9 +1,18 @@
 name: Test dbt
 
-on: [push, workflow_dispatch]
+on: [workflow_dispatch]
+
+permissions:
+  contents: read
+
+env:
+  DBT_PROFILE_TARGET: dev
+  DBT_PROFILE_ACCOUNT: ${{ secrets.DBT_PROFILE_ACCOUNT }}
+  DBT_PROFILE_USER: ${{ secrets.DBT_PROFILE_USER }}
+  DBT_PROFILE_PASSWORD: ${{ secrets.DBT_PROFILE_PASSWORD }}
 
 jobs:
-  test:
+  ci-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -21,19 +30,13 @@ jobs:
         id: cache
         with:
           path: ${{ env.pythonLocation }}
-          key: ${{ runner.os }}-python-${{ env.pythonLocation }}-${{ hashFiles('dbt-snowflake') }}
+          key: ${{ runner.os }}-python-${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          pip install dbt-snowflake
-
-      - name: Create dbt profile
-        env:
-          PROFILES_YML: ${{ secrets.PROFILES_YML }}
-        run: |
-          mkdir -p ~/.dbt
-          echo "$PROFILES_YML" > ~/.dbt/profiles.yml
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Execute dbt debug
         run: |
@@ -43,3 +46,6 @@ jobs:
       - name: Install dbt packages
         run: dbt deps
         working-directory: ./dbtlearn
+
+      - name: Check source freshness
+        run: dbt freshness

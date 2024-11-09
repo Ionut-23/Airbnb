@@ -1,6 +1,6 @@
 name: Test dbt
 
-on: 
+on:
   workflow_dispatch:
 
 permissions:
@@ -49,4 +49,4 @@ jobs:
         working-directory: ./dbtlearn
 
       - name: Check source freshness
-        run: dbt freshness
+        run: dbt source freshness

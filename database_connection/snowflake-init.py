@@ -55,7 +55,7 @@ def main():
 
         with open(CURRENT_DIR + "/course-resources.md", 'r') as file:
             md = file.read().rstrip()
-        import_pattern = r'sql {#snowflake_import}(.*?)```'; 
+        import_pattern = r'sql {#snowflake_import}(.*?)```';
         match = re.search(import_pattern, md, re.DOTALL);
         import_sqls = [row.strip() for row in match.group(1).split(';')]
         st.write(import_sqls)

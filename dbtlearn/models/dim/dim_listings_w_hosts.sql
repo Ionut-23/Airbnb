@@ -6,11 +6,11 @@ l AS (
         {{ ref('dim_listings_cleansed') }}
 ),
 h AS (
-    SELECT * 
+    SELECT *
     FROM {{ ref('dim_hosts_cleansed') }}
 )
 
-SELECT 
+SELECT
     l.listing_id,
     l.listing_name,
     l.room_type,

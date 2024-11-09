@@ -41,12 +41,12 @@ models:
         tests:
           - not_null
           - unique
-      
+
       - name: host_name
         description: The name of the host
         tests:
           - not_null
-      
+
       - name: is_superhost
         description: Defines whether the hosts is a superhost.
         tests:
@@ -82,7 +82,7 @@ models:
       - name: reviewer_name
         tests:
           - not_null
-      
+
       - name: review_sentiment
         tests:
           - accepted_values:

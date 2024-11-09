@@ -6,7 +6,7 @@ exposures:
     maturity: low
     url: https://aa3f2870.us2a.app.preset.io/superset/dashboard/p/lqZ58K38rBa/
     description: Executive Dashboard about Airbnb listings and hosts
-      
+
 
     depends_on:
       - ref('dim_listings_w_hosts')

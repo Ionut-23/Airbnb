@@ -1,0 +1,5 @@
+analysis/
+macros/
+dbt_packages/
+target/
+.venv
